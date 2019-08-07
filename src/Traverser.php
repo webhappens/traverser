@@ -57,7 +57,7 @@ class Traverser
         return $this->resolveRelation('parent');
     }
 
-    public function findParent($objects, $class = null)
+    public function inferParent($objects, $class = null)
     {
         return collect($objects)
             ->reject(function ($object) use ($class) {
@@ -76,7 +76,7 @@ class Traverser
         return $this->resolveRelation('children', collect())->filter();
     }
 
-    protected function findChildren($objects): Collection
+    protected function inferChildren($objects): Collection
     {
         return collect($objects)
             ->filter(function ($object) {
