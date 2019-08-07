@@ -1,0 +1,47 @@
+{
+    "name": "webhappens/traverser",
+    "description": "Make tree traversal more expressive",
+    "keywords": [
+        "webhappens",
+        "tree",
+        "traversal"
+    ],
+    "homepage": "https://github.com/webhappens/traverser",
+    "license": "MIT",
+    "authors": [{
+            "name": "Ben Gurney",
+            "email": "ben@webhappens.co.uk",
+            "homepage": "https://webhappens.co.uk",
+            "role": "Developer"
+        },
+        {
+            "name": "Sam Leicester",
+            "email": "sam@webhappens.co.uk",
+            "homepage": "https://webhappens.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.1",
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebHappens\\Traverser\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WebHappens\\Traverser\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebHappens\Prismic;
+namespace WebHappens\Traverser;
 
 use Illuminate\Support\Collection;
 
