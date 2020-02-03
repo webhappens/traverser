@@ -106,7 +106,7 @@ class Traverser
     {
         $descendants = collect();
 
-        $this->children()->each(function($child) use ($descendants) {
+        $this->children()->each(function($child) use (&$descendants) {
             $descendants = $descendants
                 ->push($child)
                 ->merge((static::make($child, $this->relations))->descendants());
