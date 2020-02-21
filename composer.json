@@ -1,6 +1,6 @@
 {
     "name": "webhappens/traverser",
-    "description": "Make tree traversal more expressive",
+    "description": "A Laravel package for traversing nested object structures",
     "keywords": [
         "webhappens",
         "tree",
@@ -8,7 +8,8 @@
     ],
     "homepage": "https://github.com/webhappens/traverser",
     "license": "MIT",
-    "authors": [{
+    "authors": [
+        {
             "name": "Ben Gurney",
             "email": "ben@webhappens.co.uk",
             "homepage": "https://webhappens.co.uk",
