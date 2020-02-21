@@ -76,13 +76,13 @@ class Traverser
         return $this->resolveRelation('children', collect())->filter();
     }
 
-    protected function inferChildren($objects): Collection
+    public function inferChildren($objects): Collection
     {
-        return collect($objects)
-            ->filter(function ($object) {
-                return $parent = static::make($object, $this->relations)->parent()
-                    && $this->is($parent);
-            });
+        return collect($objects)->filter(function ($object) {
+            $parent = static::make($object, $this->relations)->parent();
+
+            return $parent && $this->is($parent);
+        });
     }
 
     public function ancestors(): Collection
@@ -167,13 +167,7 @@ class Traverser
 
     protected function is($object): bool
     {
-        $id = static::make($object, $this->relations)->id();
-
-        if (is_null($id)) {
-            return false;
-        }
-
-        return $id === $this->id();
+        return $object == $this->current;
     }
 
     protected function resolveRelation($relation, $default = null) {

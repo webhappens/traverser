@@ -2,8 +2,8 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use PHPUnit\Framework\TestCase as PHPUnit;
+use Orchestra\Testbench\TestCase as Orchestra;
 
-abstract class TestCase extends PHPUnit
+abstract class TestCase extends Orchestra
 {
 }
