@@ -24,8 +24,7 @@ class AncestorsTest extends TestCase
         $ancestors = $comment->traverser()->ancestors();
 
         $this->assertEquals(collect([
-            new Category(2),
-            new Post(2)
+            new Category(2), new Post(2),
         ]), $ancestors);
     }
 
@@ -34,7 +33,9 @@ class AncestorsTest extends TestCase
         $category = new Category(1);
         $ancestorsAndSelf = $category->traverser()->ancestorsAndSelf();
 
-        $this->assertEquals(collect([new Category(1)]), $ancestorsAndSelf);
+        $this->assertEquals(collect([
+            new Category(1),
+        ]), $ancestorsAndSelf);
     }
 
     public function test_ancestors_and_self_are_returned_when_they_exist()
@@ -43,9 +44,7 @@ class AncestorsTest extends TestCase
         $ancestorsAndSelf = $comment->traverser()->ancestorsAndSelf();
 
         $this->assertEquals(collect([
-            new Category(2),
-            new Post(2),
-            new Comment(3)
+            new Category(2), new Post(2), new Comment(3),
         ]), $ancestorsAndSelf);
     }
 }

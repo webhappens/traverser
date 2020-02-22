@@ -4,15 +4,22 @@ namespace WebHappens\Traverser\Tests\Stubs;
 
 class Page extends Model
 {
+    public $uri;
+
+    public function __construct($uri)
+    {
+        $this->uri = $uri;
+    }
+
     protected static $data = [
-        1 => [],
-        2 => ['parent' => 1],
-        3 => ['parent' => 1],
+        'home' => [],
+        'about' => ['parent' => 'home'],
+        'contact' => ['parent' => 'home'],
     ];
 
     public function parent()
     {
-        if ( ! $parentId = static::data($this->id . '.parent')) {
+        if ( ! $parentId = static::data($this->uri . '.parent')) {
             return null;
         }
 

@@ -35,7 +35,9 @@ class DescendantsTest extends TestCase
         $comment = new Comment(1);
         $descendantsAndSelf = $comment->traverser()->descendantsAndSelf();
 
-        $this->assertEquals(collect([new Comment(1)]), $descendantsAndSelf);
+        $this->assertEquals(collect([
+            new Comment(1),
+        ]), $descendantsAndSelf);
     }
 
     public function test_descendants_and_self_are_returned_when_they_exist()

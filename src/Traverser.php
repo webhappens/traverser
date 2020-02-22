@@ -79,32 +79,31 @@ class Traverser
         return $this->resolveRelation('parent');
     }
 
-    public function inferParent($objects, $class = null)
+    public function inferParent($objects)
     {
-        return collect($objects)
-            ->reject(function ($object) use ($class) {
-                return $class && get_class($object) != $class;
-            })
-            ->first(function ($object) {
-                return static::make($object, $this->relations())->children()
-                    ->first(function ($object) {
-                        return $this->is($object);
-                    });
+        return collect($objects)->first(function ($object) {
+            return static::make($object, $this->relations())->children()->first(function ($object) {
+                return $this->is($object);
+            });
         });
     }
 
     public function children(): Collection
     {
-        return $this->resolveRelation('children', collect())->filter();
+        return $this->resolveRelation('children', collect())
+            ->filter()
+            ->values();
     }
 
     public function inferChildren($objects): Collection
     {
-        return collect($objects)->filter(function ($object) {
-            $parent = static::make($object, $this->relations())->parent();
+        return collect($objects)
+            ->filter(function ($object) {
+                $parent = static::make($object, $this->relations())->parent();
 
-            return $parent && $this->is($parent);
-        });
+                return $parent && $this->is($parent);
+            })
+            ->values();
     }
 
     public function ancestors(): Collection
@@ -165,8 +164,9 @@ class Traverser
 
     public function siblingsAfter(): Collection
     {
-        return $this->siblingsAndSelf()->slice($this->siblingsPosition()+1);
-
+        return $this->siblingsAndSelf()
+            ->slice($this->siblingsPosition()+1)
+            ->values();
     }
 
     public function siblingsPrevious()
@@ -177,12 +177,14 @@ class Traverser
 
     public function siblingsBefore(): Collection
     {
-        return $this->siblingsAndSelf()->slice(0, $this->siblingsPosition());
+        return $this->siblingsAndSelf()
+            ->slice(0, $this->siblingsPosition())
+            ->values();
     }
 
     public function siblingsPosition()
     {
-        return $this->siblingsAndSelf()->search(function ($sibling, $key) {
+        return $this->siblingsAndSelf()->search(function ($sibling) {
             return $this->is($sibling);
         });
     }
