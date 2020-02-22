@@ -48,27 +48,6 @@ class Traverser
         return $this;
     }
 
-    public function for($class, $parent = null, $children = null, $id = null) {
-        $this->relations()->put($class, array_filter(compact('parent', 'children', 'id')));
-
-        return $this;
-    }
-
-    public function parentFor($class, $parent)
-    {
-        return $this->for($class, $parent, null, null);
-    }
-
-    public function childrenFor($class, $children)
-    {
-        return $this->for($class, null, $children, null);
-    }
-
-    public function idFor($class, $id)
-    {
-        return $this->for($class, null, null, $id);
-    }
-
     public function id()
     {
         return $this->resolveRelation('id');
@@ -172,7 +151,6 @@ class Traverser
     public function siblingsPrevious()
     {
         return $this->siblingsBefore()->last();
-
     }
 
     public function siblingsBefore(): Collection
