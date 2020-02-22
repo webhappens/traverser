@@ -15,15 +15,6 @@ class Model
         $this->id = $id;
     }
 
-    public static function everything()
-    {
-        return collect()
-            // ->merge(Page::all())
-            ->merge(Category::all())
-            ->merge(Post::all())
-            ->merge(Comment::all());
-    }
-
     public static function all()
     {
         return collect(static::data())->keys()->mapInto(static::class);
@@ -31,11 +22,7 @@ class Model
 
     public function traverser()
     {
-        return Traverser::make($this, [
-            Category::class => ['children' => 'posts'],
-            Post::class => ['parent' => 'category', 'children' => 'comments'],
-            Comment::class => ['parent' => 'post'],
-        ]);
+        return resolve('traverser')->current($this);
     }
 
     protected static function data($key = null)

@@ -20,14 +20,36 @@ class Traverser
         return new static(...$parameters);
     }
 
-    public function __construct($current, $relations = [])
+    public function __construct($current = null, $relations = [])
     {
+        $this->current($current);
+        $this->relations($relations);
+    }
+
+    public function current($current = null)
+    {
+        if (is_null($current)) {
+            return $this->current;
+        }
+
         $this->current = $current;
+
+        return $this;
+    }
+
+    public function relations($relations = null)
+    {
+        if (is_null($relations)) {
+            return $this->relations;
+        }
+
         $this->relations = collect($relations);
+
+        return $this;
     }
 
     public function for($class, $parent = null, $children = null, $id = null) {
-        $this->relations->put($class, array_filter(compact('parent', 'children', 'id')));
+        $this->relations()->put($class, array_filter(compact('parent', 'children', 'id')));
 
         return $this;
     }
@@ -64,7 +86,7 @@ class Traverser
                 return $class && get_class($object) != $class;
             })
             ->first(function ($object) {
-                return static::make($object, $this->relations)->children()
+                return static::make($object, $this->relations())->children()
                     ->first(function ($object) {
                         return $this->is($object);
                     });
@@ -79,7 +101,7 @@ class Traverser
     public function inferChildren($objects): Collection
     {
         return collect($objects)->filter(function ($object) {
-            $parent = static::make($object, $this->relations)->parent();
+            $parent = static::make($object, $this->relations())->parent();
 
             return $parent && $this->is($parent);
         });
@@ -91,7 +113,7 @@ class Traverser
 
         if ($parent = $this->parent()) {
             $ancestors->prepend($parent);
-            $ancestors = static::make($parent, $this->relations)->ancestors()->merge($ancestors);
+            $ancestors = static::make($parent, $this->relations())->ancestors()->merge($ancestors);
         }
 
         return $ancestors;
@@ -99,7 +121,7 @@ class Traverser
 
     public function ancestorsAndSelf(): Collection
     {
-        return $this->ancestors()->push($this->current);
+        return $this->ancestors()->push($this->current());
     }
 
     public function descendants(): Collection
@@ -109,7 +131,7 @@ class Traverser
         $this->children()->each(function($child) use (&$descendants) {
             $descendants = $descendants
                 ->push($child)
-                ->merge((static::make($child, $this->relations))->descendants());
+                ->merge((static::make($child, $this->relations()))->descendants());
         });
 
         return $descendants;
@@ -117,7 +139,7 @@ class Traverser
 
     public function descendantsAndSelf(): Collection
     {
-        return $this->descendants()->prepend($this->current);
+        return $this->descendants()->prepend($this->current());
     }
 
     public function siblings(): Collection
@@ -130,10 +152,10 @@ class Traverser
     public function siblingsAndSelf(): Collection
     {
         if ( ! $parent = $this->parent()) {
-            return collect();
+            return collect([$this->current()]);
         }
 
-        return static::make($parent, $this->relations)->children();
+        return static::make($parent, $this->relations())->children();
     }
 
     public function siblingsNext()
@@ -167,7 +189,7 @@ class Traverser
 
     protected function is($object): bool
     {
-        return $object == $this->current;
+        return $object == $this->current();
     }
 
     protected function resolveRelation($relation, $default = null) {
@@ -177,12 +199,12 @@ class Traverser
             return $default;
         }
 
-        if (method_exists($this->current, $relation)) {
-            return $this->current->$relation();
+        if (method_exists($this->current(), $relation)) {
+            return $this->current()->$relation();
         }
 
-        if (isset($this->current->$relation)) {
-            return $this->current->$relation;
+        if (isset($this->current()->$relation)) {
+            return $this->current()->$relation;
         }
 
         return $default;
@@ -190,7 +212,7 @@ class Traverser
 
     protected function getRelation($relation)
     {
-        $localRelations = collect($this->relations->get(get_class($this->current)));
+        $localRelations = collect($this->relations()->get(get_class($this->current())));
 
         return $localRelations->get($relation, static::$defaultRelations[$relation]);
     }

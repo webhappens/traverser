@@ -21,6 +21,6 @@ class Page extends Model
 
     public function children()
     {
-        return $this->traverser()->inferChildren(static::everything());
+        return $this->traverser()->inferChildren(static::all());
     }
 }

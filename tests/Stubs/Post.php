@@ -14,7 +14,7 @@ class Post extends Model
 
     public function category()
     {
-        return $this->traverser()->inferParent(static::everything());
+        return $this->traverser()->inferParent(Category::all());
     }
 
     public function comments()

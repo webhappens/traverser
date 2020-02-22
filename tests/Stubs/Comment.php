@@ -17,6 +17,6 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->traverser()->inferParent(static::everything());
+        return $this->traverser()->inferParent(Post::all());
     }
 }
