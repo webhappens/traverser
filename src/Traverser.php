@@ -99,7 +99,9 @@ class Traverser
 
     public function ancestorsAndSelf(): Collection
     {
-        return $this->ancestors()->push($this->current());
+        return $this->ancestors()
+            ->push($this->current())
+            ->filter();
     }
 
     public function descendants(): Collection
@@ -117,7 +119,9 @@ class Traverser
 
     public function descendantsAndSelf(): Collection
     {
-        return $this->descendants()->prepend($this->current());
+        return $this->descendants()
+            ->prepend($this->current())
+            ->filter();
     }
 
     public function siblings(): Collection
@@ -130,7 +134,7 @@ class Traverser
     public function siblingsAndSelf(): Collection
     {
         if ( ! $parent = $this->parent()) {
-            return collect([$this->current()]);
+            return collect([$this->current()])->filter();
         }
 
         return static::make($parent, $this->maps())->children();
@@ -162,6 +166,10 @@ class Traverser
 
     public function siblingsPosition()
     {
+        if ( ! $this->current()) {
+            return null;
+        }
+
         return $this->siblingsAndSelf()->search(function ($sibling) {
             return $this->is($sibling);
         });
@@ -174,6 +182,10 @@ class Traverser
 
     protected function resolveMapping($for, $default = null)
     {
+        if ( ! $this->current()) {
+            return null;
+        }
+
         $name = collect(
             $this->maps()->get(get_class($this->current()))
         )->get($for, static::$defaultMaps[$for]);

@@ -3,12 +3,21 @@
 namespace WebHappens\Traverser\Tests;
 
 use Illuminate\Support\Collection;
+use WebHappens\Traverser\Traverser;
 use WebHappens\Traverser\Tests\Stubs\Page;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Category;
 
 class ChildrenTest extends TestCase
 {
+    public function test_children_returns_empty_collection_when_no_current()
+    {
+        $children = Traverser::make()->children();
+
+        $this->assertInstanceOf(Collection::class, $children);
+        $this->assertEmpty($children);
+    }
+
     public function test_children_returns_empty_collection_when_none_exist()
     {
         $page = new Page('about');

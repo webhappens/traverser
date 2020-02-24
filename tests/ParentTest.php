@@ -2,12 +2,20 @@
 
 namespace WebHappens\Traverser\Tests;
 
+use WebHappens\Traverser\Traverser;
 use WebHappens\Traverser\Tests\Stubs\Page;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Category;
 
 class ParentTest extends TestCase
 {
+    public function test_parent_returns_null_when_no_current()
+    {
+        $parent = Traverser::make()->parent();
+
+        $this->assertNull($parent);
+    }
+
     public function test_parent_returns_null_when_none_exist()
     {
         $page = new Page('home');
