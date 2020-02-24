@@ -1,6 +1,6 @@
 {
     "name": "webhappens/traverser",
-    "description": "A Laravel package for traversing nested object structures",
+    "description": "Easily traverse nested object structures without worrying about recursion.",
     "keywords": [
         "webhappens",
         "tree",

@@ -24,6 +24,7 @@ class DescendantsTest extends TestCase
         $descendants = $category->traverser()->descendants();
 
         $this->assertEquals(collect([
+            new Category(3), new Post(4), new Post(5), new Comment(8),
             new Post(1), new Comment(1), new Comment(2),
             new Post(2), new Comment(3),
             new Post(3), new Comment(4), new Comment(5), new Comment(6), new Comment(7),
@@ -47,6 +48,7 @@ class DescendantsTest extends TestCase
 
         $this->assertEquals(collect([
             new Category(2),
+            new Category(3), new Post(4), new Post(5), new Comment(8),
             new Post(1), new Comment(1), new Comment(2),
             new Post(2), new Comment(3),
             new Post(3), new Comment(4), new Comment(5), new Comment(6), new Comment(7),

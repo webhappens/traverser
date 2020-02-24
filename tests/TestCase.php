@@ -2,26 +2,8 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use WebHappens\Traverser\Traverser;
-use WebHappens\Traverser\Tests\Stubs\Page;
-use WebHappens\Traverser\Tests\Stubs\Post;
-use WebHappens\Traverser\Tests\Stubs\Comment;
-use Orchestra\Testbench\TestCase as Orchestra;
-use WebHappens\Traverser\Tests\Stubs\Category;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
-abstract class TestCase extends Orchestra
+abstract class TestCase extends PHPUnit
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app->bind('traverser', function () {
-            return Traverser::make()->maps([
-                Page::class => ['id' => 'uri'],
-                Category::class => ['children' => 'posts'],
-                Post::class => ['parent' => 'category', 'children' => 'comments'],
-                Comment::class => ['parent' => 'post'],
-            ]);
-        });
-    }
 }

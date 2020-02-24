@@ -22,7 +22,11 @@ class Model
 
     public function traverser()
     {
-        return resolve('traverser')->current($this);
+        return Traverser::make($this, [
+            Page::class => ['id' => 'uri'],
+            Post::class => ['parent' => 'category', 'children' => 'comments'],
+            Comment::class => ['parent' => 'post'],
+        ]);
     }
 
     protected static function data($key = null)

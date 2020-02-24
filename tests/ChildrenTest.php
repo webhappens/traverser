@@ -37,7 +37,7 @@ class ChildrenTest extends TestCase
         $children = $category->traverser()->children();
 
         $this->assertEquals(collect([
-            new Post(1), new Post(2), new Post(3),
+            new Category(3), new Post(1), new Post(2), new Post(3),
         ]), $children);
     }
 }

@@ -33,7 +33,7 @@ class SiblingsTest extends TestCase
         $siblings = $post->traverser()->siblings();
 
         $this->assertEquals(collect([
-            new Post(1), new Post(2),
+            new Category(3), new Post(1), new Post(2),
         ]), $siblings);
     }
 
@@ -63,7 +63,7 @@ class SiblingsTest extends TestCase
         $siblingsAndSelf = $post->traverser()->siblingsAndSelf();
 
         $this->assertEquals(collect([
-            new Post(1), new Post(2), new Post(3),
+            new Category(3), new Post(1), new Post(2), new Post(3),
         ]), $siblingsAndSelf);
     }
 
@@ -104,7 +104,7 @@ class SiblingsTest extends TestCase
 
     public function test_siblings_previous_returns_null_when_none_exist()
     {
-        $post = new Post(1);
+        $post = new Post(4);
         $siblingsPrevious = $post->traverser()->siblingsPrevious();
 
         $this->assertNull($siblingsPrevious);
@@ -120,7 +120,7 @@ class SiblingsTest extends TestCase
 
     public function test_siblings_before_returns_empty_collection_when_none_exist()
     {
-        $post = new Post(1);
+        $post = new Post(4);
         $siblingsBefore = $post->traverser()->siblingsBefore();
 
         $this->assertInstanceOf(Collection::class, $siblingsBefore);
@@ -133,15 +133,16 @@ class SiblingsTest extends TestCase
         $siblingsBefore = $post->traverser()->siblingsBefore();
 
         $this->assertEquals(collect([
-            new Post(1), new Post(2),
+            new Category(3), new Post(1), new Post(2),
         ]), $siblingsBefore);
     }
 
     public function test_siblings_position()
     {
         $this->assertEquals(0, (new Category(2))->traverser()->siblingsPosition());
-        $this->assertEquals(0, (new Post(1))->traverser()->siblingsPosition());
-        $this->assertEquals(1, (new Post(2))->traverser()->siblingsPosition());
-        $this->assertEquals(2, (new Post(3))->traverser()->siblingsPosition());
+        $this->assertEquals(0, (new Category(3))->traverser()->siblingsPosition());
+        $this->assertEquals(1, (new Post(1))->traverser()->siblingsPosition());
+        $this->assertEquals(2, (new Post(2))->traverser()->siblingsPosition());
+        $this->assertEquals(3, (new Post(3))->traverser()->siblingsPosition());
     }
 }
