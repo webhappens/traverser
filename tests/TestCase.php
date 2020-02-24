@@ -16,7 +16,7 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         $this->app->bind('traverser', function () {
-            return Traverser::make()->relations([
+            return Traverser::make()->maps([
                 Page::class => ['id' => 'uri'],
                 Category::class => ['children' => 'posts'],
                 Post::class => ['parent' => 'category', 'children' => 'comments'],

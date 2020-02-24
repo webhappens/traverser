@@ -5,17 +5,17 @@ namespace WebHappens\Traverser\Tests;
 use stdClass;
 use WebHappens\Traverser\Traverser;
 
-class ResolveRelationTest extends TestCase
+class ResolveMappingTest extends TestCase
 {
-    public function test_default_relations()
+    public function test_default_maps()
     {
         $this->assertEquals(
             ['id' => 'id', 'parent' => 'parent', 'children' => 'children'],
-            Traverser::$defaultRelations
+            Traverser::$defaultMaps
         );
     }
 
-    public function test_relations_resolve_to_methods_first()
+    public function test_maps_resolve_to_methods_first()
     {
         $traverser = Traverser::make($this->getMockObjectWithMethodsAndProperties());
 
@@ -24,7 +24,7 @@ class ResolveRelationTest extends TestCase
         $this->assertEquals('id', $traverser->id());
     }
 
-    public function test_relations_resolve_to_properties()
+    public function test_maps_resolve_to_properties()
     {
         $traverser = Traverser::make($this->getMockObjectWithJustProperties());
 

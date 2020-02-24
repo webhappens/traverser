@@ -6,24 +6,24 @@ use Illuminate\Support\Collection;
 
 class Traverser
 {
-    public static $defaultRelations = [
+    public static $defaultMaps = [
         'id' => 'id',
         'parent' => 'parent',
         'children' => 'children',
     ];
 
     protected $current;
-    protected $relations = [];
+    protected $maps = [];
 
     public static function make(...$parameters)
     {
         return new static(...$parameters);
     }
 
-    public function __construct($current = null, $relations = [])
+    public function __construct($current = null, $maps = [])
     {
         $this->current($current);
-        $this->relations($relations);
+        $this->maps($maps);
     }
 
     public function current($current = null)
@@ -37,31 +37,31 @@ class Traverser
         return $this;
     }
 
-    public function relations($relations = null)
+    public function maps($maps = null)
     {
-        if (is_null($relations)) {
-            return $this->relations;
+        if (is_null($maps)) {
+            return $this->maps;
         }
 
-        $this->relations = collect($relations);
+        $this->maps = collect($maps);
 
         return $this;
     }
 
     public function id()
     {
-        return $this->resolveRelation('id');
+        return $this->resolveMapping('id');
     }
 
     public function parent()
     {
-        return $this->resolveRelation('parent');
+        return $this->resolveMapping('parent');
     }
 
     public function inferParent($objects)
     {
         return collect($objects)->first(function ($object) {
-            return static::make($object, $this->relations())->children()->first(function ($object) {
+            return static::make($object, $this->maps())->children()->first(function ($object) {
                 return $this->is($object);
             });
         });
@@ -69,7 +69,7 @@ class Traverser
 
     public function children(): Collection
     {
-        return $this->resolveRelation('children', collect())
+        return $this->resolveMapping('children', collect())
             ->filter()
             ->values();
     }
@@ -78,7 +78,7 @@ class Traverser
     {
         return collect($objects)
             ->filter(function ($object) {
-                $parent = static::make($object, $this->relations())->parent();
+                $parent = static::make($object, $this->maps())->parent();
 
                 return $parent && $this->is($parent);
             })
@@ -91,7 +91,7 @@ class Traverser
 
         if ($parent = $this->parent()) {
             $ancestors->prepend($parent);
-            $ancestors = static::make($parent, $this->relations())->ancestors()->merge($ancestors);
+            $ancestors = static::make($parent, $this->maps())->ancestors()->merge($ancestors);
         }
 
         return $ancestors;
@@ -109,7 +109,7 @@ class Traverser
         $this->children()->each(function($child) use (&$descendants) {
             $descendants = $descendants
                 ->push($child)
-                ->merge((static::make($child, $this->relations()))->descendants());
+                ->merge((static::make($child, $this->maps()))->descendants());
         });
 
         return $descendants;
@@ -133,7 +133,7 @@ class Traverser
             return collect([$this->current()]);
         }
 
-        return static::make($parent, $this->relations())->children();
+        return static::make($parent, $this->maps())->children();
     }
 
     public function siblingsNext()
@@ -172,28 +172,23 @@ class Traverser
         return $object == $this->current();
     }
 
-    protected function resolveRelation($relation, $default = null) {
-        $relation = $this->getRelation($relation);
+    protected function resolveMapping($for, $default = null) {
+        $name = collect(
+            $this->maps()->get(get_class($this->current()))
+        )->get($for, static::$defaultMaps[$for]);
 
-        if ( ! $relation) {
+        if ( ! $name) {
             return $default;
         }
 
-        if (method_exists($this->current(), $relation)) {
-            return $this->current()->$relation();
+        if (method_exists($this->current(), $name)) {
+            return $this->current()->$name();
         }
 
-        if (isset($this->current()->$relation)) {
-            return $this->current()->$relation;
+        if (isset($this->current()->$name)) {
+            return $this->current()->$name;
         }
 
         return $default;
-    }
-
-    protected function getRelation($relation)
-    {
-        $localRelations = collect($this->relations()->get(get_class($this->current())));
-
-        return $localRelations->get($relation, static::$defaultRelations[$relation]);
     }
 }

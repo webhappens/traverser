@@ -12,17 +12,17 @@ class ConstructTest extends TestCase
         $traverser = Traverser::make();
 
         $this->assertEquals(null, $traverser->current());
-        $this->assertEquals(collect(), $traverser->relations());
+        $this->assertEquals(collect(), $traverser->maps());
     }
 
-    public function test_construct_with_current_and_relations()
+    public function test_construct_with_current_and_maps()
     {
         $current = new stdClass;
-        $relations = ['foo' => 'bar'];
-        $traverser = Traverser::make($current, $relations);
+        $maps = ['foo' => 'bar'];
+        $traverser = Traverser::make($current, $maps);
 
         $this->assertEquals($current, $traverser->current());
-        $this->assertEquals(collect($relations), $traverser->relations());
+        $this->assertEquals(collect($maps), $traverser->maps());
     }
 
     public function test_current_getter_setter()
@@ -33,11 +33,11 @@ class ConstructTest extends TestCase
         $this->assertEquals($current, $traverser->current());
     }
 
-    public function test_relations_getter_setter()
+    public function test_maps_getter_setter()
     {
-        $relations = ['foo' => 'bar'];
-        $traverser = Traverser::make()->relations($relations);
+        $maps = ['foo' => 'bar'];
+        $traverser = Traverser::make()->maps($maps);
 
-        $this->assertEquals(collect($relations), $traverser->relations());
+        $this->assertEquals(collect($maps), $traverser->maps());
     }
 }
