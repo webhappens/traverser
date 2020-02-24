@@ -2,7 +2,7 @@
 
 namespace WebHappens\Traverser;
 
-use Illuminate\Support\Collection;
+use Tightenco\Collect\Support\Collection;
 
 class Traverser
 {
@@ -69,7 +69,7 @@ class Traverser
 
     public function children(): Collection
     {
-        return $this->resolveMapping('children', collect())
+        return collect($this->resolveMapping('children', []))
             ->filter()
             ->values();
     }
@@ -106,7 +106,7 @@ class Traverser
     {
         $descendants = collect();
 
-        $this->children()->each(function($child) use (&$descendants) {
+        $this->children()->each(function ($child) use (&$descendants) {
             $descendants = $descendants
                 ->push($child)
                 ->merge((static::make($child, $this->maps()))->descendants());
@@ -172,7 +172,8 @@ class Traverser
         return $object == $this->current();
     }
 
-    protected function resolveMapping($for, $default = null) {
+    protected function resolveMapping($for, $default = null)
+    {
         $name = collect(
             $this->maps()->get(get_class($this->current()))
         )->get($for, static::$defaultMaps[$for]);

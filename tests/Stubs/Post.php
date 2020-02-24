@@ -19,6 +19,8 @@ class Post extends Model
 
     public function comments()
     {
-        return collect(static::data($this->id . '.comments'))->mapInto(Comment::class);
+        return collect(static::data($this->id . '.comments'))
+            ->mapInto(Comment::class)
+            ->toArray();
     }
 }

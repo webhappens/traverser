@@ -12,6 +12,8 @@ class Category extends Model
 
     public function posts()
     {
-        return collect(static::data($this->id . '.posts'))->mapInto(Post::class);
+        return collect(static::data($this->id . '.posts'))
+            ->mapInto(Post::class)
+            ->toArray();
     }
 }
