@@ -1,3 +1,5 @@
+![tests](https://github.com/webhappens/traverser/workflows/tests/badge.svg)
+
 # Traverser
 
 Easily traverse nested object structures without worrying about recursion. Great for building menus, navigation, sitemaps and more!
