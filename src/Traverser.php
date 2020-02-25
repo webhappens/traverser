@@ -50,7 +50,7 @@ class Traverser
 
     public function id()
     {
-        return $this->resolveMapping('id');
+        return $this->isEloquentModel() ? $this->current()->getKey() : $this->resolveMapping('id');
     }
 
     public function parent()
@@ -177,7 +177,22 @@ class Traverser
 
     protected function is($object): bool
     {
-        return $object == $this->current();
+        if (get_class($object) !== get_class($this->current())) {
+            return false;
+        }
+
+        $id = $this->id();
+
+        if (is_null($id)) {
+            return false;
+        }
+
+        return static::make($object, $this->maps())->id() === $id;
+    }
+
+    protected function isEloquentModel()
+    {
+        return is_subclass_of($this->current(), 'Illuminate\\Database\\Eloquent\\Model');
     }
 
     protected function resolveMapping($for, $default = null)
