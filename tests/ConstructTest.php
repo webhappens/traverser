@@ -18,7 +18,7 @@ class ConstructTest extends TestCase
     public function test_construct_with_current_and_maps()
     {
         $current = new stdClass;
-        $maps = ['foo' => 'bar'];
+        $maps = ['foo' => ['parent' => 'bar']];
         $traverser = Traverser::make($current, $maps);
 
         $this->assertEquals($current, $traverser->current());
@@ -35,7 +35,7 @@ class ConstructTest extends TestCase
 
     public function test_maps_getter_setter()
     {
-        $maps = ['foo' => 'bar'];
+        $maps = ['foo' => ['parent' => 'bar']];
         $traverser = Traverser::make()->maps($maps);
 
         $this->assertEquals(collect($maps), $traverser->maps());
