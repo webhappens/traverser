@@ -28,7 +28,7 @@ use WebHappens\Traverser\Traverser;
 
 In order for the traverser to understand your hierarchy, you must ensure it can resolve "id", "parent" and "children" for each class in that hierarchy.
 
-By default, it will look for "methods" or "properties" (in that order) by each of these names.
+By default, it will look for "methods" or "properties" (in that order) by each of these names. If your classes extend from `Illuminate\Database\Eloquent\Model` it will resolve the "id" automatically from the `getKey` method.
 
 Your classes should typically look something like this:
 
