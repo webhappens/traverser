@@ -9,14 +9,16 @@ use WebHappens\Traverser\Tests\Stubs\Category;
 
 class ParentTest extends TestCase
 {
-    public function test_parent_returns_null_when_no_current()
+    /** @test */
+    public function parent_returns_null_when_no_current()
     {
         $parent = Traverser::make()->parent();
 
         $this->assertNull($parent);
     }
 
-    public function test_parent_returns_null_when_none_exist()
+    /** @test */
+    public function parent_returns_null_when_none_exist()
     {
         $page = new Page('home');
         $parent = $page->traverser()->parent();
@@ -29,7 +31,8 @@ class ParentTest extends TestCase
         $this->assertNull($parent);
     }
 
-    public function test_parent_is_returned_when_it_exists()
+    /** @test */
+    public function parent_is_returned_when_it_exists()
     {
         $page = new Page('about');
         $parent = $page->traverser()->parent();

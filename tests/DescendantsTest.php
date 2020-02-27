@@ -2,15 +2,16 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use Illuminate\Support\Collection;
 use WebHappens\Traverser\Traverser;
+use Tightenco\Collect\Support\Collection;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Comment;
 use WebHappens\Traverser\Tests\Stubs\Category;
 
 class DescendantsTest extends TestCase
 {
-    public function test_descendants_returns_empty_collection_when_no_current()
+    /** @test */
+    public function descendants_returns_empty_collection_when_no_current()
     {
         $descendants = Traverser::make()->descendants();
 
@@ -18,7 +19,8 @@ class DescendantsTest extends TestCase
         $this->assertEmpty($descendants);
     }
 
-    public function test_descendants_returns_empty_collection_when_none_exist()
+    /** @test */
+    public function descendants_returns_empty_collection_when_none_exist()
     {
         $category = new Category(1);
         $descendants = $category->traverser()->descendants();
@@ -27,7 +29,8 @@ class DescendantsTest extends TestCase
         $this->assertEmpty($descendants);
     }
 
-    public function test_descendants_are_returned_when_they_exist()
+    /** @test */
+    public function descendants_are_returned_when_they_exist()
     {
         $category = new Category(2);
         $descendants = $category->traverser()->descendants();
@@ -40,7 +43,8 @@ class DescendantsTest extends TestCase
         ]), $descendants);
     }
 
-    public function test_descendants_and_self_returns_empty_collection_when_no_current()
+    /** @test */
+    public function descendants_and_self_returns_empty_collection_when_no_current()
     {
         $descendantsAndSelf = Traverser::make()->descendantsAndSelf();
 
@@ -48,7 +52,8 @@ class DescendantsTest extends TestCase
         $this->assertEmpty($descendantsAndSelf);
     }
 
-    public function test_descendants_and_self_returns_just_self_when_no_descendants_exist()
+    /** @test */
+    public function descendants_and_self_returns_just_self_when_no_descendants_exist()
     {
         $comment = new Comment(1);
         $descendantsAndSelf = $comment->traverser()->descendantsAndSelf();
@@ -58,7 +63,8 @@ class DescendantsTest extends TestCase
         ]), $descendantsAndSelf);
     }
 
-    public function test_descendants_and_self_are_returned_when_they_exist()
+    /** @test */
+    public function descendants_and_self_are_returned_when_they_exist()
     {
         $category = new Category(2);
         $descendants = $category->traverser()->descendantsAndSelf();

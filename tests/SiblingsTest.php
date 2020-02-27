@@ -2,15 +2,16 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use Illuminate\Support\Collection;
 use WebHappens\Traverser\Traverser;
+use Tightenco\Collect\Support\Collection;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Comment;
 use WebHappens\Traverser\Tests\Stubs\Category;
 
 class SiblingsTest extends TestCase
 {
-    public function test_siblings_returns_empty_collection_when_no_current()
+    /** @test */
+    public function siblings_returns_empty_collection_when_no_current()
     {
         $siblings = Traverser::make()->siblings();
 
@@ -18,7 +19,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblings);
     }
 
-    public function test_siblings_returns_empty_collection_when_no_parent_exists()
+    /** @test */
+    public function siblings_returns_empty_collection_when_no_parent_exists()
     {
         $category = new Category(1);
         $siblings = $category->traverser()->siblings();
@@ -27,7 +29,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblings);
     }
 
-    public function test_siblings_returns_empty_collection_when_none_exist()
+    /** @test */
+    public function siblings_returns_empty_collection_when_none_exist()
     {
         $comment = new Comment(8);
         $siblings = $comment->traverser()->siblings();
@@ -36,7 +39,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblings);
     }
 
-    public function test_siblings_are_returned_when_they_exist()
+    /** @test */
+    public function siblings_are_returned_when_they_exist()
     {
         $post = new Post(3);
         $siblings = $post->traverser()->siblings();
@@ -46,7 +50,8 @@ class SiblingsTest extends TestCase
         ]), $siblings);
     }
 
-    public function test_siblings_and_self_returns_empty_collection_when_no_current()
+    /** @test */
+    public function siblings_and_self_returns_empty_collection_when_no_current()
     {
         $siblingsAndSelf = Traverser::make()->siblingsAndSelf();
 
@@ -54,7 +59,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblingsAndSelf);
     }
 
-    public function test_siblings_and_self_returns_just_self_when_no_parent_exists()
+    /** @test */
+    public function siblings_and_self_returns_just_self_when_no_parent_exists()
     {
         $category = new Category(1);
         $siblingsAndSelf = $category->traverser()->siblingsAndSelf();
@@ -64,7 +70,8 @@ class SiblingsTest extends TestCase
         ]), $siblingsAndSelf);
     }
 
-    public function test_siblings_and_self_returns_just_self_when_none_exist()
+    /** @test */
+    public function siblings_and_self_returns_just_self_when_none_exist()
     {
         $comment = new Comment(8);
         $siblingsAndSelf = $comment->traverser()->siblingsAndSelf();
@@ -74,7 +81,8 @@ class SiblingsTest extends TestCase
         ]), $siblingsAndSelf);
     }
 
-    public function test_siblings_and_self_are_returned_when_they_exist()
+    /** @test */
+    public function siblings_and_self_are_returned_when_they_exist()
     {
         $post = new Post(3);
         $siblingsAndSelf = $post->traverser()->siblingsAndSelf();
@@ -84,14 +92,16 @@ class SiblingsTest extends TestCase
         ]), $siblingsAndSelf);
     }
 
-    public function test_siblings_next_returns_null_when_no_current()
+    /** @test */
+    public function siblings_next_returns_null_when_no_current()
     {
         $siblingsNext = Traverser::make()->siblingsNext();
 
         $this->assertNull($siblingsNext);
     }
 
-    public function test_siblings_next_returns_null_when_none_exist()
+    /** @test */
+    public function siblings_next_returns_null_when_none_exist()
     {
         $post = new Post(3);
         $siblingsNext = $post->traverser()->siblingsNext();
@@ -99,7 +109,8 @@ class SiblingsTest extends TestCase
         $this->assertNull($siblingsNext);
     }
 
-    public function test_siblings_next_returns_when_it_exists()
+    /** @test */
+    public function siblings_next_returns_when_it_exists()
     {
         $post = new Post(1);
         $siblingsNext = $post->traverser()->siblingsNext();
@@ -107,7 +118,8 @@ class SiblingsTest extends TestCase
         $this->assertEquals(new Post(2), $siblingsNext);
     }
 
-    public function test_siblings_after_returns_empty_collection_when_no_current()
+    /** @test */
+    public function siblings_after_returns_empty_collection_when_no_current()
     {
         $siblingsAfter = Traverser::make()->siblingsAfter();
 
@@ -115,7 +127,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblingsAfter);
     }
 
-    public function test_siblings_after_returns_empty_collection_when_none_exist()
+    /** @test */
+    public function siblings_after_returns_empty_collection_when_none_exist()
     {
         $post = new Post(3);
         $siblingsAfter = $post->traverser()->siblingsAfter();
@@ -124,7 +137,8 @@ class SiblingsTest extends TestCase
         $this->assertCount(0, $siblingsAfter);
     }
 
-    public function test_siblings_after_returns_when_they_exist()
+    /** @test */
+    public function siblings_after_returns_when_they_exist()
     {
         $post = new Post(1);
         $siblingsAfter = $post->traverser()->siblingsAfter();
@@ -134,14 +148,16 @@ class SiblingsTest extends TestCase
         ]), $siblingsAfter);
     }
 
-    public function test_siblings_previous_returns_null_when_no_current()
+    /** @test */
+    public function siblings_previous_returns_null_when_no_current()
     {
         $siblingsPrevious = Traverser::make()->siblingsPrevious();
 
         $this->assertNull($siblingsPrevious);
     }
 
-    public function test_siblings_previous_returns_null_when_none_exist()
+    /** @test */
+    public function siblings_previous_returns_null_when_none_exist()
     {
         $post = new Post(4);
         $siblingsPrevious = $post->traverser()->siblingsPrevious();
@@ -149,7 +165,8 @@ class SiblingsTest extends TestCase
         $this->assertNull($siblingsPrevious);
     }
 
-    public function test_siblings_previous_returns_when_it_exists()
+    /** @test */
+    public function siblings_previous_returns_when_it_exists()
     {
         $post = new Post(2);
         $siblingsPrevious = $post->traverser()->siblingsPrevious();
@@ -157,7 +174,8 @@ class SiblingsTest extends TestCase
         $this->assertEquals(new Post(1), $siblingsPrevious);
     }
 
-    public function test_siblings_before_returns_empty_collection_when_no_current()
+    /** @test */
+    public function siblings_before_returns_empty_collection_when_no_current()
     {
         $siblingsBefore = Traverser::make()->siblingsBefore();
 
@@ -165,7 +183,8 @@ class SiblingsTest extends TestCase
         $this->assertEmpty($siblingsBefore);
     }
 
-    public function test_siblings_before_returns_empty_collection_when_none_exist()
+    /** @test */
+    public function siblings_before_returns_empty_collection_when_none_exist()
     {
         $post = new Post(4);
         $siblingsBefore = $post->traverser()->siblingsBefore();
@@ -174,7 +193,8 @@ class SiblingsTest extends TestCase
         $this->assertCount(0, $siblingsBefore);
     }
 
-    public function test_siblings_before_returns_when_they_exist()
+    /** @test */
+    public function siblings_before_returns_when_they_exist()
     {
         $post = new Post(3);
         $siblingsBefore = $post->traverser()->siblingsBefore();
@@ -184,14 +204,16 @@ class SiblingsTest extends TestCase
         ]), $siblingsBefore);
     }
 
-    public function test_siblings_position_returns_null_when_no_current()
+    /** @test */
+    public function siblings_position_returns_null_when_no_current()
     {
         $siblingsPosition = Traverser::make()->siblingsPosition();
 
         $this->assertNull($siblingsPosition);
     }
 
-    public function test_siblings_position()
+    /** @test */
+    public function siblings_position()
     {
         $this->assertEquals(0, (new Category(2))->traverser()->siblingsPosition());
         $this->assertEquals(0, (new Category(3))->traverser()->siblingsPosition());

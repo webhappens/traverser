@@ -9,21 +9,24 @@ use WebHappens\Traverser\Tests\Stubs\Post;
 
 class IdTest extends TestCase
 {
-    public function test_id_returns_null_when_no_current()
+    /** @test */
+    public function id_returns_null_when_no_current()
     {
         $id = Traverser::make()->id();
 
         $this->assertNull($id);
     }
 
-    public function test_id_returns_null_when_not_set()
+    /** @test */
+    public function id_returns_null_when_not_set()
     {
         $object = new stdClass;
 
         $this->assertNull(Traverser::make($object)->id());
     }
 
-    public function test_id_is_returned()
+    /** @test */
+    public function id_is_returned()
     {
         $page = new Page('home');
         $id = $page->traverser()->id();

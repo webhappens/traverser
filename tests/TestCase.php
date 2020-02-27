@@ -2,8 +2,6 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use PHPUnit\Framework\TestCase as PHPUnit;
-
-abstract class TestCase extends PHPUnit
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
 }

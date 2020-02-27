@@ -7,7 +7,8 @@ use WebHappens\Traverser\Traverser;
 
 class ResolveMappingTest extends TestCase
 {
-    public function test_default_maps()
+    /** @test */
+    public function default_maps()
     {
         $this->assertEquals(
             ['id' => 'id', 'parent' => 'parent', 'children' => 'children'],
@@ -15,7 +16,8 @@ class ResolveMappingTest extends TestCase
         );
     }
 
-    public function test_maps_resolve_to_methods_first()
+    /** @test */
+    public function maps_resolve_to_methods_first()
     {
         $traverser = Traverser::make($this->getMockObjectWithMethodsAndProperties());
 
@@ -24,7 +26,8 @@ class ResolveMappingTest extends TestCase
         $this->assertEquals('id', $traverser->id());
     }
 
-    public function test_maps_resolve_to_properties()
+    /** @test */
+    public function maps_resolve_to_properties()
     {
         $traverser = Traverser::make($this->getMockObjectWithJustProperties());
 

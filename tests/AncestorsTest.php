@@ -2,15 +2,16 @@
 
 namespace WebHappens\Traverser\Tests;
 
-use Illuminate\Support\Collection;
 use WebHappens\Traverser\Traverser;
+use Tightenco\Collect\Support\Collection;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Comment;
 use WebHappens\Traverser\Tests\Stubs\Category;
 
 class AncestorsTest extends TestCase
 {
-    public function test_ancestors_returns_empty_collection_when_no_current()
+    /** @test */
+    public function ancestors_returns_empty_collection_when_no_current()
     {
         $ancestors = Traverser::make()->ancestors();
 
@@ -18,7 +19,8 @@ class AncestorsTest extends TestCase
         $this->assertEmpty($ancestors);
     }
 
-    public function test_ancestors_returns_empty_collection_when_none_exist()
+    /** @test */
+    public function ancestors_returns_empty_collection_when_none_exist()
     {
         $category = new Category(1);
         $ancestors = $category->traverser()->ancestors();
@@ -27,7 +29,8 @@ class AncestorsTest extends TestCase
         $this->assertEmpty($ancestors);
     }
 
-    public function test_ancestors_are_returned_when_they_exist()
+    /** @test */
+    public function ancestors_are_returned_when_they_exist()
     {
         $comment = new Comment(3);
         $ancestors = $comment->traverser()->ancestors();
@@ -37,7 +40,8 @@ class AncestorsTest extends TestCase
         ]), $ancestors);
     }
 
-    public function test_ancestors_and_self_returns_empty_collection_when_no_current()
+    /** @test */
+    public function ancestors_and_self_returns_empty_collection_when_no_current()
     {
         $ancestorsAndSelf = Traverser::make()->ancestorsAndSelf();
 
@@ -45,7 +49,8 @@ class AncestorsTest extends TestCase
         $this->assertEmpty($ancestorsAndSelf);
     }
 
-    public function test_ancestors_and_self_returns_just_self_when_no_ancestors_exist()
+    /** @test */
+    public function ancestors_and_self_returns_just_self_when_no_ancestors_exist()
     {
         $category = new Category(1);
         $ancestorsAndSelf = $category->traverser()->ancestorsAndSelf();
@@ -55,7 +60,8 @@ class AncestorsTest extends TestCase
         ]), $ancestorsAndSelf);
     }
 
-    public function test_ancestors_and_self_are_returned_when_they_exist()
+    /** @test */
+    public function ancestors_and_self_are_returned_when_they_exist()
     {
         $comment = new Comment(3);
         $ancestorsAndSelf = $comment->traverser()->ancestorsAndSelf();
