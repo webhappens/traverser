@@ -185,6 +185,7 @@ $siblingsPosition = $this->traverser()->siblingsPosition();
 
  - Ben Gurney: ben@webhappens.co.uk
  - Sam Leicester: sam@webhappens.co.uk
+ - [All Contributors](../../contributors)
 
 ## License
 
