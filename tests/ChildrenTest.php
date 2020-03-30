@@ -2,8 +2,8 @@
 
 namespace WebHappens\Traverser\Tests;
 
+use Illuminate\Support\Collection;
 use WebHappens\Traverser\Traverser;
-use Tightenco\Collect\Support\Collection;
 use WebHappens\Traverser\Tests\Stubs\Page;
 use WebHappens\Traverser\Tests\Stubs\Post;
 use WebHappens\Traverser\Tests\Stubs\Category;

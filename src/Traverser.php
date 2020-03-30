@@ -2,7 +2,7 @@
 
 namespace WebHappens\Traverser;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class Traverser
 {
