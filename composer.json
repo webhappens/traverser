@@ -1,6 +1,6 @@
 {
     "name": "webhappens/traverser",
-    "description": "A Laravel package for traversing nested object structures",
+    "description": "Easily traverse nested object structures without worrying about recursion.",
     "keywords": [
         "webhappens",
         "tree",
@@ -23,11 +23,12 @@
         }
     ],
     "require": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "tightenco/collect": "^6.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.1",
-        "phpunit/phpunit": "^7.3"
+        "phpunit/phpunit": "^7.5.15|^8.4|^9.0",
+        "symfony/var-dumper": "^4.3.4|^5.0"
     },
     "autoload": {
         "psr-4": {
