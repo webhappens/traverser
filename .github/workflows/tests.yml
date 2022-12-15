@@ -9,17 +9,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4, 8.0]
+        php: [8.0, 8.1]
         stability: [prefer-lowest, prefer-stable]
 
     name: ${{ matrix.php }} - ${{ matrix.stability }}
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Composer cache
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.composer/cache/files
         key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
